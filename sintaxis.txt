@@ -1,0 +1,236 @@
+ANALISIS SINTACTICO 
+ejercicio tablas 1
+
+Dada la regla sintáctica
+term : term exp
+     | NUMERO
+     ;
+
+exp : '+' term
+    | '-' term
+    |
+    ;
+
+Realizar la tabla de Análisis Sintáctico Descendente para la entrada
+7 - 2 + 9
+
+$term                       7-2+9$ Derivar
+$exp term                   7-2+9$ Derivar
+$exp NUMERO                 7-2+9$ Match 7
+$exp                         -2+9$ Derivar
+$term '-'                    -2+9$ Match '-'
+$term                         2+9$ Derivar
+$exp term                     2+9$ Derivar
+$exp NUMERO                   2+9$ Match 2
+$exp                           +9$ Derivar
+$term '+'                      +9$ Match '+'
+$term                           9$ Derivar
+$NUMERO                         9$ Match 9
+$                                $ OK
+
+Realizar la tabla de Análisis Sintáctico Descendente para la entrada
+5 + 3 6 - 4
+
+$term                       5+3 6-4$ Derivar
+$exp term                   5+3 6-4$ Derivar
+$exp NUMERO                 5+3 6-4$ Match 5
+$exp                         +3 6-4$ Derivar
+$term '+'                    +3 6-4$ Match '+'
+$term                         3 6-4$ Derivar
+$exp term                     3 6-4$ Derivar
+$exp NUMERO                   3 6-4$ Match 3
+$exp                           6-4$ ERROR no hay derivacion para 6
+
+Realizar la tabla de Análisis Sintáctico Descendente para la entrada
+5 + - 3 + 4
+
+$term                       5+-3+4$ Derivar
+$exp term                   5+-3+4$ Derivar
+$exp NUMERO                 5+-3+4$ Match 5
+$exp                         +-3+4$ Derivar
+$term '+'                    +-3+4$ Match '+'
+$term                         -3+4$ ERROR no hay derivacion para -
+
+Realizar la tabla de Análisis Sintáctico Ascendente para la entrada
+7 - 2 + 9
+
+$                       7-2+9$ Desplazar
+$7                       -2+9$ Reducir term -> NUMERO
+$term                    -2+9$ Desplazar
+$term  -                  2+9$ Desplazar
+$term  - 2                 +9$ Reducir term -> NUMERO
+$term  - term              +9$ Reducir exp -> '-' term
+$term exp                  +9$ Reducir term -> term exp
+$term                      +9$ Desplazar
+$term   +                   9$ Desplazar
+$term   + 9                  $ Reducir term -> NUMERO
+$term   + term               $ Reducir exp -> '+' term
+$term exp                    $ Reducir term -> term exp
+$term                        $ OK
+
+
+Realizar la tabla de Análisis Sintáctico Ascendente para la entrada
+5 + 3 6 - 4
+
+$                       5+3 6-4$ Desplazar
+$5                       +3 6-4$ Reducir term -> NUMERO
+$term                    +3 6-4$ Desplazar
+$term  +                  3 6-4$ Desplazar
+$term  + 3                 6-4$ Reducir term -> NUMERO
+$term  + term              6-4$ Reducir exp -> '+' term
+$term exp                  6-4$ Reducir term -> term exp
+$term                      6-4$ Desplazar
+$term  6                    -4$ Desplazar
+$term  6 -                   4$ Desplazar
+$term  6 - 4                  $ Reducir term -> NUMERO
+$term  6 - term               $ Reducir exp -> '-' term
+$term  6 term                 $ Reducir term -> term exp
+$term  6 term                 $ ERROR
+
+
+Realizar la tabla de Análisis Sintáctico Ascendente para la entrada
+5 + - 3 + 4
+
+$                       5+-3+4$ Desplazar
+$5                       +-3+4$ Reducir term -> NUMERO
+$term                    +-3+4$ Desplazar
+$term  +                  -3+4$ Desplazar
+$term  + -                 3+4$ Desplazar
+$term  + - 3                +4$ Reducir term -> NUMERO
+$term  + - term             +4$ Reducir exp -> '+' term
+$term + exp                 +4$ Desplazar
+$term + exp +                4$ Desplazar
+$term + exp + 4               $ Reducir term -> NUMERO
+$term + exp + term            $ Reducir exp -> '+' term
+$term + exp exp               $ ERROR
+
+
+---------------------------------------------------------------------------------------------------
+ejercicio tablas 2
+
+Dada la regla sintáctica
+
+operacion : term ;
+
+term : term exp
+     | NUMERO
+     | '(' term ')'
+     ;
+
+exp : '+' term
+    | '-' term
+    |
+    ;
+
+Realizar la tabla de Análisis Sintáctico Descendente para la entrada
+7 - ( 2 + 9 )
+
+$operacion                  7-(2+9)$ Derivar
+$term                       7-(2+9)$ Derivar
+$exp term                   7-(2+9)$ Derivar
+$exp NUMERO                 7-(2+9)$ Match 7
+$exp                         -(2+9)$ Derivar
+$term '-'                    -(2+9)$ Match '-'
+$term                         (2+9)$ Derivar
+$')' term '('                 (2+9)$ Match '('
+$')' term                      2+9)$ Derivar
+$')' exp term                  2+9)$ Derivar
+$')' exp NUMERO                2+9)$ Match 2
+$')' exp                        +9)$ Derivar
+$')' term '+'                   +9)$ Match '+'
+$')' term                        9)$ Derivar
+$')' NUMERO                      9)$ Match 9
+$')'                              )$ Match ')'
+$                                  $ OK
+
+
+Realizar la tabla de Análisis Sintáctico Descendente para la entrada
+5 + ( 6 - 4
+
+$operacion                  5+(6-4$ Derivar
+$term                       5+(6-4$ Derivar
+$exp term                   5+(6-4$ Derivar
+$exp NUMERO                 5+(6-4$ Match 5
+$exp                         +(6-4$ Derivar
+$term '+'                    +(6-4$ Match '+'
+$term                         (6-4$ Derivar
+$')' term '('                 (6-4$ Match '('
+$')' term                      6-4$ Derivar
+$')' exp term                  6-4$ Derivar
+$')' exp NUMERO                6-4$ Match 6
+$')' exp                        -4$ Derivar
+$')' term '-'                   -4$ Match '-'
+$')' term                        4$ Derivar
+$')' NUMERO                      4$ Match 4
+$')'                              $ ERROR 
+
+Realizar la tabla de Análisis Sintáctico Descendente para la entrada
+5 + 6 ) - 4
+
+$operacion                  5+6)-4$ Derivar
+$term                       5+6)-4$ Derivar
+$exp term                   5+6)-4$ Derivar
+$exp NUMERO                 5+6)-4$ Match 5
+$exp                         +6)-4$ Derivar
+$term '+'                    +6)-4$ Match '+'
+$term                         6)-4$ Derivar
+$exp term                     6)-4$ Derivar
+$exp NUMERO                   6)-4$ Match 6
+$exp                           )-4$ ERROR
+
+Realizar la tabla de Análisis Sintáctico Ascendente para la entrada
+7 - ( 2 + 9 )
+
+$                       7-(2+9)$ Desplazar
+$7                       -(2+9)$ Reducir term -> NUMERO
+$term                    -(2+9)$ Desplazar
+$term  -                  (2+9)$ Desplazar
+$term  - (                 2+9)$ Desplazar
+$term  - ( 2                +9)$ Reducir term -> NUMERO
+$term  - ( term             +9)$ Desplazar
+$term  - ( term +            9)$ Desplazar
+$term  - ( term + 9           )$ Reducir term -> NUMERO
+$term  - ( term + term        )$ Reducir exp -> '+' term
+$term  - ( term exp           )$ Reducir term -> term exp
+$term  - ( term               )$ Desplazar
+$term -  ( term )              $ Reducir term -> '(' term ')'
+$term -  term                  $ Reducir exp -> '-' term
+$term exp                      $ Reducir term -> term exp
+$term                          $ Reducir operacion -> term
+$operacion                     $ OK
+
+
+Realizar la tabla de Análisis Sintáctico Ascendente para la entrada
+5 + ( 6 - 4
+
+$                       5+(6-4$ Desplazar
+$5                       +(6-4$ Reducir term -> NUMERO
+$term                    +(6-4$ Desplazar
+$term  +                  (6-4$ Desplazar
+$term  + (                 6-4$ Desplazar
+$term  + ( 6                -4$ Reducir term -> NUMERO
+$term  + ( term             -4$ Desplazar
+$term  + ( term -            4$ Desplazar
+$term  + ( term - 4           $ Reducir term -> NUMERO
+$term  + ( term - term        $ Reducir exp -> '-' term
+$term  + ( term exp           $ Reducir term -> term exp
+$term  + ( term               $ ERROR
+
+Realizar la tabla de Análisis Sintáctico Ascendente para la entrada
+5 + 6 ) - 4
+
+$                       5+6)-4$ Desplazar
+$5                       +6)-4$ Reducir term -> NUMERO
+$term                    +6)-4$ Desplazar
+$term  +                  6)-4$ Desplazar
+$term  + 6                 )-4$ Reducir term -> NUMERO
+$term  + term              )-4$ Reducir exp -> '+' term
+$term exp                  )-4$ Reducir term -> term exp
+$term                      )-4$ Desplazar
+$term  )                   -4$ Desplazar
+$term  ) -                  4$ Desplazar
+$term  ) - 4                 $ Reducir term -> NUMERO
+$term  ) - term              $ Reducir exp -> '-' term
+$term  ) term                $ Reducir term -> term exp
+$term  ) term                $ ERROR
+
