@@ -18,3 +18,9 @@ if (x > y){
 else{
     y = x/2;
 }
+
+a++;
+
+int add(int a, int b){
+    return a + b;
+}
