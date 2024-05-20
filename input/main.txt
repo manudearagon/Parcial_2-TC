@@ -1,0 +1,42 @@
+// Declaracion de una funcion
+int suma(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    // Declaracion e inicializacion de variables
+    int numero = 10;
+    float pi = 3.14159;
+    char letra = 'A';
+
+    // Imprimir valores en la consola
+    printf("Numero", numero);
+    printf("Valor de Pi", pi); // Limitar a 2 decimales
+    printf("Letra", letra);
+
+    // Estructuras de control
+    if (numero > 5) {
+        printf("El numero es mayor que 5");
+    } else {
+        printf("El numero no es mayor que 5");
+    }
+
+    int i;
+    // Bucle for
+    for (i = 0; i < 5; i++) {
+        printf("Iteracion", i);
+    }
+
+    // Bucle while
+    int j = 0;
+    while (j < 3) {
+        printf("Bucle while, iteracion", j);
+        j++;
+    }
+
+    // Llamada a una funcion
+    int resultado = suma(5, 3);
+    printf("Resultado de la suma", resultado);
+
+    return 0;
+}
