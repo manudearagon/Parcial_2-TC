@@ -163,10 +163,8 @@ declaracion_funcion : DT ID PA declaracion_parametros PC (bloque | instruccion)
 instanciar_funcion : ID PA parametros PC PYC
         ;
 
-comentario : '//' .*? '\n'
+comentario : '//' .*? 
            ;
-
-
 
 escribir_consola : PRINTF PA (COMILLA .*? COMILLA | COMILLASIMPLE .*? COMILLASIMPLE) PYC
                  ;

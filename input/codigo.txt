@@ -1,26 +1,6 @@
 int x;
-double y;
-
-
-while (x > y ){
-      x = x + 1;
-      y = y + 1;
-}
-
-for (int i = 0; i < 10; i++){
-    x = x + 1;
-    y = y + 1;
-}
-
-if (x > y){
-    x = y/2;
-}
-else{
-    y = x/2;
-}
-
-a++;
-
-int add(int a, int b){
-    return a + b;
-}
+int x;
+a = x + 1;
+int z;
+char y;
+y = 1;

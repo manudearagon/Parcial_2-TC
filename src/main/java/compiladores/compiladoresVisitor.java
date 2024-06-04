@@ -91,6 +91,12 @@ public interface compiladoresVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCondiciones(compiladoresParser.CondicionesContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#return}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturn(compiladoresParser.ReturnContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link compiladoresParser#bloque}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -120,4 +126,40 @@ public interface compiladoresVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFor(compiladoresParser.ForContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#declaracion_parametros}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDeclaracion_parametros(compiladoresParser.Declaracion_parametrosContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#parametros}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParametros(compiladoresParser.ParametrosContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#declaracion_funcion}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDeclaracion_funcion(compiladoresParser.Declaracion_funcionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#instanciar_funcion}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInstanciar_funcion(compiladoresParser.Instanciar_funcionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#comentario}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitComentario(compiladoresParser.ComentarioContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#escribir_consola}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEscribir_consola(compiladoresParser.Escribir_consolaContext ctx);
 }
