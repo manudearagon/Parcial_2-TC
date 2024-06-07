@@ -12,7 +12,7 @@
       "grammar": "${file}",
       //"grammar": "src/main/java/compiladores/compiladores.g4",
       // Archivo a parsear
-      "input": "input/codigo.txt",
+      "input": "input/codigo.c",
       // Simbolo inicial
       "startRule": "programa",
       // Muestra Arbol Sintactico

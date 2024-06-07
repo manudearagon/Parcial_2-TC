@@ -1,6 +1,1 @@
 int x;
-int x;
-a = x + 1;
-int z;
-char y;
-y = 1;

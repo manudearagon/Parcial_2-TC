@@ -1,7 +1,6 @@
 package compiladores;
 
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -11,8 +10,9 @@ public class App {
     public static void main(String[] args) throws Exception {
         
         System.out.print("\033[H\033[2J");
+        System.out.print("Analisis \n");
         // create a CharStream that reads from file
-        CharStream input = CharStreams.fromFileName("input/codigo.txt");
+        CharStream input = CharStreams.fromFileName("input/codigo.c");
 
         // create a lexer that feeds off of input CharStream
         compiladoresLexer lexer = new compiladoresLexer(input);
@@ -30,6 +30,7 @@ public class App {
         ParseTree tree =  parser.programa();
 
         CustomVisitor visitor = new CustomVisitor();
+
         visitor.visit(tree);
     }
 }
