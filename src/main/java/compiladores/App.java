@@ -8,9 +8,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 // Las diferentes entradas se explicaran oportunamente
 public class App {
     public static void main(String[] args) throws Exception {
-        
-        System.out.print("\033[H\033[2J");
-        System.out.print("Analisis \n");
         // create a CharStream that reads from file
         CharStream input = CharStreams.fromFileName("input/codigo.c");
 
@@ -32,5 +29,7 @@ public class App {
         CustomVisitor visitor = new CustomVisitor();
 
         visitor.visit(tree);
+
+        System.out.println(tree.toStringTree(parser));
     }
 }

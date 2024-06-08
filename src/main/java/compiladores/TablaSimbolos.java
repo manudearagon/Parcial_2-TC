@@ -7,7 +7,7 @@ import java.util.List;
 public class TablaSimbolos {
     private static TablaSimbolos instance;
 
-    private List<Map<String, Id>> symbolTable;
+    private List<Map<String, Variable>> symbolTable;
 
     private TablaSimbolos() {
         symbolTable = new LinkedList<>();
@@ -29,15 +29,15 @@ public class TablaSimbolos {
         symbolTable.remove(symbolTable.size() - 1);
     }
 
-    public void addSymbol(String name , Id id) {
+    public void addSymbol(String name , Variable id) {
         if(symbolTable.isEmpty() && Boolean.TRUE.equals(containsSymbol(name))) return;
-        Map<String, Id> currentScope = symbolTable.get(symbolTable.size() - 1);
+        Map<String, Variable> currentScope = symbolTable.get(symbolTable.size() - 1);
         currentScope.put(name, id);
     }
 
-    public Id getSymbol(String name) {
+    public Variable getSymbol(String name) {
         for (int i = symbolTable.size() - 1; i >= 0; i--) {
-            Map<String, Id> actualContext = symbolTable.get(i);
+            Map<String, Variable> actualContext = symbolTable.get(i);
             if (actualContext.containsKey(name)) {
                 return actualContext.get(name);
             }
@@ -47,7 +47,7 @@ public class TablaSimbolos {
 
     public Boolean containsSymbol(String name) {
         for (int i = symbolTable.size() - 1; i >= 0; i--) {
-            Map<String, Id> actualContext = symbolTable.get(i);
+            Map<String, Variable> actualContext = symbolTable.get(i);
             if (actualContext.containsKey(name)) {
                 return true;
             }
@@ -56,57 +56,62 @@ public class TablaSimbolos {
     }
 
     public Boolean validateActualContext(String name) {
-        Map<String, Id> contextoActual = symbolTable.get(symbolTable.size() - 1);
+        Map<String, Variable> contextoActual = symbolTable.get(symbolTable.size() - 1);
         return contextoActual.containsKey(name);
     }
 }
-abstract class Id {
-    private String nombre;
-    private String tipoDato;
+
+
+
+class Variable 
+ {
+    private String name;
+    private String dataType;
     private Boolean initialized;
     private Boolean used;
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getTipoDato() {
-        return tipoDato;
+    public String getDataType() {
+        return dataType;
     }
 
-    public void setTipoDato(String tipoDato) {
-        this.tipoDato = tipoDato;
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
     }
 
-    public Boolean getinitialized() {
+    public Boolean getInitialized() {
         return initialized;
     }
 
-    public void setinitialized(Boolean initialized) {
+    public void setInitialized(Boolean initialized) {
         this.initialized = initialized;
     }
 
-    public Boolean getUsado() {
+    public Boolean getUsed() {
         return used;
     }
 
-    public void setUsado(Boolean used) {
+    public void setUsed(Boolean used) {
         this.used = used;
     }
+ }
+
+class Funcion extends Variable {
+    private List<DataType> args;
 }
 
-class Variable extends Id {}
-
-class Funcion extends Id {
-    private List<TipoDato> argumentos;
-}
-
-enum TipoDato {
+enum DataType {
     VOID, 
     INT, 
-    DOUBLE
+    DOUBLE,
+    STRING,
+    CHAR,
+    BOOL
 }

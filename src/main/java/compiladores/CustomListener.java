@@ -1,5 +1,251 @@
 package compiladores;
 
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.tree.TerminalNode;
+
+import compiladores.compiladoresParser.*;
+
 public class CustomListener extends compiladoresBaseListener {
+    private Integer nodes = 0;
+    private Integer tokens = 0;
+    private Integer errors = 0;
+    private TablaSimbolos symbolTable = TablaSimbolos.getInstance();
+
+    @Override
+    public void enterEveryRule(ParserRuleContext ctx) {
+        nodes++;
+        super.enterEveryRule(ctx);
+    }
+
+    @Override
+    public void visitErrorNode(ErrorNode node) {
+        errors++;
+        super.visitErrorNode(node);
+    }
+
+    @Override
+    public void visitTerminal(TerminalNode node) {
+        tokens++;
+        super.visitTerminal(node);
+    } 
+
+    @Override
+    public void enterPrograma(ProgramaContext ctx){
+        System.out.println("Analisis del codigo fuente");
+        symbolTable.addScope();
+        super.enterPrograma(ctx);
+    }
+
+    @Override
+    public void exitPrograma(ProgramaContext ctx){
+        symbolTable.removeScope();
+        super.exitPrograma(ctx);
+        System.out.println("Cantidad de nodos -> " + nodes);
+        System.out.println("Cantidad de tokens -> " + tokens);
+        System.out.println("Cantidad de errores -> " + errors);
+    }
+
+    @Override
+    public void enterBloque(BloqueContext ctx) {
+        symbolTable.addScope();
+        super.enterBloque(ctx);
+    }
+
+    @Override
+    public void exitBloque(BloqueContext ctx) {
+        symbolTable.removeScope();
+        super.exitBloque(ctx);
+    }
+
+    @Override
+    public void enterDeclaracion(DeclaracionContext ctx){
+        super.enterDeclaracion(ctx);
+    }
+
+    @Override
+    public void exitDeclaracion(DeclaracionContext ctx){
+        super.exitDeclaracion(ctx);
+
+        String name = ctx.ID().getText();
+
+        if (symbolTable.containsSymbol(name) == false) {
+            Variable var = new Variable();
+
+            String tipo = ctx.getChild(0).getText();
+
+            var.setDataType(tipo);
+            var.setName(name);
+            if (ctx.getChild(2).getText().isBlank()) {
+                var.setInitialized(false);
+            }
+            else {
+                var.setInitialized(true);
+            }
+            var.setUsed(false);
+
+            symbolTable.addSymbol(name, var);
+
+     
+        }
+        else {
+            System.out.println("Error semantico: Doble declaracion del mismo identificador: " + ctx.getText());
+            errors++;
+        }
+    }
+
+    @Override
+    public void enterFuncion(FuncionContext ctx){
+        super.enterFuncion(ctx);
+    }
+
+    @Override
+    public void exitFuncion(FuncionContext ctx){
+        super.exitFuncion(ctx);
+
+        String id = ctx.ID().getText();
+
+        if (symbolTable.containsSymbol(id) == false) {
+            Funcion function = new Funcion();
+
+            String tipo = ctx.getChild(0).getText();
+
+            function.setName(id);
+            function.setDataType(tipo);
+            function.setUsed(false);
+
+            symbolTable.addSymbol(id, function);
+         }
+        else {
+            System.out.println("Error semantico: Doble declaracion del mismo identificador: " + ctx.getText());
+            errors++;
+        }
+
+    }
+
+    @Override
+    public void exitDeclaracion_funcion(Declaracion_funcionContext ctx) {
+        super.exitDeclaracion_funcion(ctx);
+
+        //Pendiente: Implementar recursividad con idfunc
+        //Pendiente: Registrar argumentos
+
+        String nombre = ctx.ID().getText();
+
+        if (symbolTable.validateActualContext(nombre) == false) {
+            Funcion function = new Funcion();
+
+            String tipo = ctx.getChild(0).getText();
+
+            function.setName(nombre);
+            function.setDataType(tipo);
+            function.setUsed(false);
+
+            symbolTable.addSymbol(nombre, function);
+
+          }
+        else {
+            System.out.println("Error semantico: Doble declaracion del mismo identificador: " + ctx.getText());
+            errors++;
+        }
+    }
+
+    
+    @Override
+    public void exitAsignacion(AsignacionContext ctx) {
+        super.exitAsignacion(ctx);
+        if (ctx.ID() != null) {
+            Variable symbol = symbolTable.getSymbol(ctx.ID().getText());
+            if (symbol == null) {
+                System.out.println("Error semantico: Uso de un identificador no declarado: " +  ctx.ID().getText() );
+                errors++;             
+            }
+            else if (symbol != null && symbol.getInitialized() == false) {
+                System.out.println("Error semantico: Uso de un identificador no inicializado: "  + ctx.ID().getText() );
+                errors++;
+            }
+        }
+    }
+
+    @Override
+    public void exitFactor(FactorContext ctx) {
+        super.exitFactor(ctx);
+        if (ctx.ID() != null) {
+            Variable symbol = symbolTable.getSymbol(ctx.ID().getText());
+            if (symbol == null) {
+                System.out.println("Error semantico: Uso de un identificador no declarado: " + ctx.ID().getText() );
+                errors++;             
+            }
+            else if (symbol != null && symbol.getInitialized() == false) {
+                System.out.println("Error semantico: Uso de un identificador no inicializado: " + ctx.ID().getText());
+                errors++;
+            }
+        }  
+    }
+    
+    @Override
+    public void exitCambio_variable(Cambio_variableContext ctx) {
+        super.exitCambio_variable(ctx);
+       if (ctx.ID() != null) {
+            Variable symbol = symbolTable.getSymbol(ctx.ID().getText());
+            if (symbol == null) {
+                System.out.println("Error semantico: Uso de un identificador no declarado: " + ctx.ID().getText());
+                errors++;             
+            }
+            else if (symbol != null && symbol.getInitialized() == false) {
+                System.out.println("Error semantico: Uso de un identificador no inicializado: "+ ctx.ID().getText());
+                errors++;
+            }
+        } 
+    }
+
+    @Override
+    public void exitFactores_funcion(Factores_funcionContext ctx) {
+        super.exitFactores_funcion(ctx);
+        if (ctx.ID() != null) {
+            Variable symbol = symbolTable.getSymbol(ctx.ID().getText());
+            if (symbol == null) {
+                System.out.println("Error semantico: Uso de un identificador no declarado: " + ctx.ID().getText());
+                errors++;             
+            }
+            else if (symbol != null && symbol.getInitialized() == false) {
+                System.out.println("Error semantico: Uso de un identificador no inicializado: "+ ctx.ID().getText());
+                errors++;
+            }
+        } 
+    }
+
+    @Override
+    public void exitListado_factores_funcion(Listado_factores_funcionContext ctx) {
+        super.exitListado_factores_funcion(ctx);
+        if (ctx.ID() != null) {
+            Variable symbol = symbolTable.getSymbol(ctx.ID().getText());
+            if (symbol == null) {
+                System.out.println("Error semantico: Uso de un identificador no declarado: "+ ctx.ID().getText());
+                errors++;             
+            }
+            else if (symbol != null && symbol.getInitialized() == false) {
+                System.out.println("Error semantico: Uso de un identificador no inicializado: "+ ctx.ID().getText());
+                errors++;
+            }
+        } 
+    }
+
+    @Override
+    public void exitLlamada_funcion(Llamada_funcionContext ctx) {
+        super.exitLlamada_funcion(ctx);
+       if (ctx.ID() != null) {
+            Variable symbol = symbolTable.getSymbol(ctx.ID().getText());
+            if (symbol == null) {
+                System.out.println("Error semantico: Uso de un identificador no declarado: "+ ctx.ID().getText());
+                errors++;             
+            }
+            else if (symbol != null && symbol.getInitialized() == false) {
+                System.out.println("Error semantico: Uso de un identificador no inicializado: " + ctx.ID().getText());
+                errors++;
+            }
+        } 
+    }
+
     
 }
