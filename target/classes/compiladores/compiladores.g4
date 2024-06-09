@@ -79,7 +79,12 @@ instruccion : declaracion
             | llamada_funcion
             | comentario
             | escribir_consola
+            | return
             ;
+
+return  : RETURN factores_funcion PYC
+        | RETURN PYC
+        ;
 
 declaracion: tipo ID inicializacion_variable lista_identificadores PYC;
 

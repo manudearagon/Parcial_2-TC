@@ -56,11 +56,49 @@ public class CustomListener extends compiladoresBaseListener {
     public void exitBloque(BloqueContext ctx) {
         symbolTable.removeScope();
         super.exitBloque(ctx);
+        if (ctx.getChild(0).getText().equals("{") == false) {
+            System.out.println("Error sintactico: Falta llave de apertura en el bloque: " + ctx.getText());
+            errors++;
+        }
+        if (ctx.getChild(ctx.getChildCount() - 1).getText().equals("}") == false) {
+            System.out.println("Error sintactico: Falta llave de cierre en el bloque: " + ctx.getText());
+            errors++;
+        }
     }
 
     @Override
-    public void enterDeclaracion(DeclaracionContext ctx){
-        super.enterDeclaracion(ctx);
+    public void exitReturn(ReturnContext ctx) {
+        super.exitReturn(ctx);
+        if (ctx.getChild(0).getText().equals("return") == false) {
+            System.out.println("Error sintactico: Falta la palabra reservada return en la sentencia: " + ctx.getText());
+            errors++;
+        }
+        if (ctx.getChild(ctx.getChildCount() - 1).getText().equals(";") == false) {
+            System.out.println("Error sintactico: Falta punto y coma en la sentencia: " + ctx.getText());
+            errors++;
+        }
+    }
+
+    @Override
+    public void exitComparador(ComparadorContext ctx) {
+        super.exitComparador(ctx);
+        if (ctx.getChildCount() != 1 || ctx.getChild(0).getText().equals("==") == false && ctx.getChild(0).getText().equals("!=") == false && ctx.getChild(0).getText().equals(">") == false && ctx.getChild(0).getText().equals("<") == false && ctx.getChild(0).getText().equals(">=") == false && ctx.getChild(0).getText().equals("<=") == false){
+            System.out.println("Error sintactico: Comparador invalido o inexistente en la condicion: " + ctx.getText());
+            errors++;
+        }
+    }
+
+    @Override
+    public void exitCondicion(CondicionContext ctx) {
+        super.exitCondicion(ctx);
+        if (ctx.getChild(0).getText().equals("(") == false) {
+            System.out.println("Error sintactico: Falta parentesis de apertura en la condicion: " + ctx.getText());
+            errors++;
+        }
+        if (ctx.getChild(ctx.getChildCount() - 1).getText().equals(")") == false) {
+            System.out.println("Error sintactico: Falta parentesis de cierre en la condicion: " + ctx.getText());
+            errors++;
+        }
     }
 
     @Override
@@ -68,12 +106,11 @@ public class CustomListener extends compiladoresBaseListener {
         super.exitDeclaracion(ctx);
 
         String name = ctx.ID().getText();
-
         if (symbolTable.containsSymbol(name) == false) {
             Variable var = new Variable();
-
+            
             String tipo = ctx.getChild(0).getText();
-
+            
             var.setDataType(tipo);
             var.setName(name);
             if (ctx.getChild(2).getText().isBlank()) {
@@ -120,16 +157,13 @@ public class CustomListener extends compiladoresBaseListener {
             System.out.println("Error semantico: Doble declaracion del mismo identificador: " + ctx.getText());
             errors++;
         }
-
     }
+
+    
 
     @Override
     public void exitDeclaracion_funcion(Declaracion_funcionContext ctx) {
         super.exitDeclaracion_funcion(ctx);
-
-        //Pendiente: Implementar recursividad con idfunc
-        //Pendiente: Registrar argumentos
-
         String nombre = ctx.ID().getText();
 
         if (symbolTable.validateActualContext(nombre) == false) {
@@ -245,6 +279,10 @@ public class CustomListener extends compiladoresBaseListener {
                 errors++;
             }
         } 
+        if (ctx.getChild(ctx.getChildCount() - 1).getText().equals(";") == false) {
+            System.out.println("Error sintactico: Falta punto y coma al final de la sentencia: " + ctx.getText());
+            errors++;
+        }
     }
 
     
