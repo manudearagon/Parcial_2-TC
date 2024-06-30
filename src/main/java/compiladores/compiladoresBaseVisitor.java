@@ -1,7 +1,7 @@
 // Generated from /Users/manud/Desktop/TC/Parcial 2/src/main/java/compiladores/compiladores.g4 by ANTLR 4.13.1
 
  package compiladores;
- 
+
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -42,6 +42,13 @@ public class compiladoresBaseVisitor<T> extends AbstractParseTreeVisitor<T> impl
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitReturn(compiladoresParser.ReturnContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitOperacion(compiladoresParser.OperacionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -223,14 +230,14 @@ public class compiladoresBaseVisitor<T> extends AbstractParseTreeVisitor<T> impl
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVariables_funcion(compiladoresParser.Variables_funcionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitParametros(compiladoresParser.ParametrosContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLista_variables_funcion(compiladoresParser.Lista_variables_funcionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitLista_parametros(compiladoresParser.Lista_parametrosContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -245,13 +252,6 @@ public class compiladoresBaseVisitor<T> extends AbstractParseTreeVisitor<T> impl
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitListado_factores_funcion(compiladoresParser.Listado_factores_funcionContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitComentario(compiladoresParser.ComentarioContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

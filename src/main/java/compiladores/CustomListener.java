@@ -104,13 +104,10 @@ public class CustomListener extends compiladoresBaseListener {
     @Override
     public void exitDeclaracion(DeclaracionContext ctx){
         super.exitDeclaracion(ctx);
-
         String name = ctx.ID().getText();
         if (symbolTable.containsSymbol(name) == false) {
             Variable var = new Variable();
-            
             String tipo = ctx.getChild(0).getText();
-            
             var.setDataType(tipo);
             var.setName(name);
             if (ctx.getChild(2).getText().isBlank()) {
@@ -120,21 +117,47 @@ public class CustomListener extends compiladoresBaseListener {
                 var.setInitialized(true);
             }
             var.setUsed(false);
-
             symbolTable.addSymbol(name, var);
-
-     
         }
         else {
             System.out.println("Error semantico: Doble declaracion del mismo identificador: " + ctx.getText());
             errors++;
         }
+
+        String[] identificadores = ctx.lista_identificadores().getText().split(",");
+        
+        
+    if(ctx.lista_identificadores().getText() != "") { 
+        for (String identificador : identificadores) {
+            var id = identificador.split("=")[0];
+            
+            var valor = "";
+            if (identificador.contains("=")) {
+                valor = identificador.split("=")[1];
+            }
+            
+            if (symbolTable.containsSymbol(id) == false) {
+                Variable var = new Variable();
+                String tipo = ctx.getChild(0).getText();
+                var.setDataType(tipo);
+                var.setName(id);
+                if (valor.isBlank()) {
+                    var.setInitialized(false);
+                }
+                else {
+                    var.setInitialized(true);
+                }
+                var.setUsed(false);
+                symbolTable.addSymbol(id, var);
+            }
+            else {
+                System.out.println("Error semantico: Doble declaracion del mismo identificador: " + id);
+                errors++;
+            }
+        }
+        }
     }
 
-    @Override
-    public void enterFuncion(FuncionContext ctx){
-        super.enterFuncion(ctx);
-    }
 
     @Override
     public void exitFuncion(FuncionContext ctx){
@@ -202,22 +225,6 @@ public class CustomListener extends compiladoresBaseListener {
     }
 
     @Override
-    public void exitFactor(FactorContext ctx) {
-        super.exitFactor(ctx);
-        if (ctx.ID() != null) {
-            Variable symbol = symbolTable.getSymbol(ctx.ID().getText());
-            if (symbol == null) {
-                System.out.println("Error semantico: Uso de un identificador no declarado: " + ctx.ID().getText() );
-                errors++;             
-            }
-            else if (symbol != null && symbol.getInitialized() == false) {
-                System.out.println("Error semantico: Uso de un identificador no inicializado: " + ctx.ID().getText());
-                errors++;
-            }
-        }  
-    }
-    
-    @Override
     public void exitCambio_variable(Cambio_variableContext ctx) {
         super.exitCambio_variable(ctx);
        if (ctx.ID() != null) {
@@ -250,19 +257,34 @@ public class CustomListener extends compiladoresBaseListener {
     }
 
     @Override
-    public void exitListado_factores_funcion(Listado_factores_funcionContext ctx) {
-        super.exitListado_factores_funcion(ctx);
-        if (ctx.ID() != null) {
-            Variable symbol = symbolTable.getSymbol(ctx.ID().getText());
-            if (symbol == null) {
-                System.out.println("Error semantico: Uso de un identificador no declarado: "+ ctx.ID().getText());
-                errors++;             
-            }
-            else if (symbol != null && symbol.getInitialized() == false) {
-                System.out.println("Error semantico: Uso de un identificador no inicializado: "+ ctx.ID().getText());
+    public void exitIf(IfContext ctx) {
+        
+        super.exitIf(ctx);
+        if (ctx.getChild(0).getText().equals("if") == false) {
+            System.out.println("Error sintactico: Falta la palabra reservada if en la sentencia: " + ctx.getText());
+            errors++;
+        }
+        // Validamos que se se hayan usado las llaves
+        if (ctx.getChild(1).getChild(0).getText().equals("(") == false) {
+            System.out.println("Error sintactico: Falta parentesis de apertura en la condicion: " + ctx.getText());
+            errors++;
+        }
+        // Validamos que se se hayan usado las llaves
+        if (ctx.getChild(1).getChild(ctx.getChildCount() - 1).getText().equals(")") == false) {
+            System.out.println("Error sintactico: Falta parentesis de cierre en la condicion: " + ctx.getText());
+            errors++;
+        }
+        if (ctx.bloque() != null) {
+            var bloque = ctx.getChild(2);
+            if(bloque.getChild(0).getText().equals("{") == false) {
+                System.out.println("Error sintactico: Falta llave de apertura en el bloque: " + bloque.getText());
                 errors++;
             }
-        } 
+            if(bloque.getChild(bloque.getChildCount() - 1).getText().equals("}") == false) {
+                System.out.println("Error sintactico: Falta llave de cierre en el bloque: " + bloque.getText());
+                errors++;
+            }
+        }
     }
 
     @Override
@@ -285,5 +307,14 @@ public class CustomListener extends compiladoresBaseListener {
         }
     }
 
-    
+    @Override
+    public void exitExp(ExpContext ctx) {
+        super.exitExp(ctx);
+        if(ctx.getText() != null && ctx.getText().length() > 1){
+            if (ctx.getChild(0).getText().equals("+") == false && ctx.getChild(0).getText().equals("-") == false && ctx.getChild(0).getText().equals("*") == false && ctx.getChild(0).getText().equals("/") == false) {
+                System.out.println("Error sintactico: Operador invalido en la expresion: " + ctx.getText());
+                errors++;
+            }
+        }
+    }
 }

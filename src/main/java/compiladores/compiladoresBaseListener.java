@@ -1,7 +1,7 @@
 // Generated from /Users/manud/Desktop/TC/Parcial 2/src/main/java/compiladores/compiladores.g4 by ANTLR 4.13.1
 
  package compiladores;
- 
+
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -62,6 +62,18 @@ public class compiladoresBaseListener implements compiladoresListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitReturn(compiladoresParser.ReturnContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOperacion(compiladoresParser.OperacionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOperacion(compiladoresParser.OperacionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -367,25 +379,25 @@ public class compiladoresBaseListener implements compiladoresListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVariables_funcion(compiladoresParser.Variables_funcionContext ctx) { }
+	@Override public void enterParametros(compiladoresParser.ParametrosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVariables_funcion(compiladoresParser.Variables_funcionContext ctx) { }
+	@Override public void exitParametros(compiladoresParser.ParametrosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLista_variables_funcion(compiladoresParser.Lista_variables_funcionContext ctx) { }
+	@Override public void enterLista_parametros(compiladoresParser.Lista_parametrosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLista_variables_funcion(compiladoresParser.Lista_variables_funcionContext ctx) { }
+	@Override public void exitLista_parametros(compiladoresParser.Lista_parametrosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -410,18 +422,6 @@ public class compiladoresBaseListener implements compiladoresListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitListado_factores_funcion(compiladoresParser.Listado_factores_funcionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterComentario(compiladoresParser.ComentarioContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitComentario(compiladoresParser.ComentarioContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

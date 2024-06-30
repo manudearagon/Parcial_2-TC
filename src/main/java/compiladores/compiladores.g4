@@ -1,10 +1,10 @@
 grammar compiladores;
 
- @header {
+@header {
  package compiladores;
- }
+}
 
-//tokens
+// Tokens
 fragment LETRA : [A-Za-z];
 fragment DIGITO : [0-9] ;
 PA : '(' ;
@@ -15,7 +15,7 @@ LA : '{' ;
 LC : '}' ; 
 COMILLA : '"' ;
 COMILLASIMPLE : '\'' ;
-//simbolos
+// Símbolos
 PYC : ';' ;
 IGUAL : '=' ;
 MAS : '+' ;
@@ -36,12 +36,9 @@ AND : '&&' ;
 OR : '||' ;
 NOT : '!' ;
 
-WS : [ \t\n\r]+ -> skip ;
+WS : [ \t\n\r]+ -> skip;
 
-
-
-//palabras reservadas
-
+// Palabras reservadas
 WHILE   : 'while' ;
 FOR     : 'for' ; 
 IF      : 'if' ;
@@ -62,10 +59,11 @@ LOGICO : AND | OR | NOT ;
 NUMERO : DIGITO+ ;
 ID : (LETRA | '_')(LETRA | DIGITO | '_')* ;
 
+// Reglas
 programa: instrucciones EOF;
 
 instrucciones : instruccion instrucciones
-                |
+              |
               ;
 
 instruccion : declaracion
@@ -77,7 +75,7 @@ instruccion : declaracion
             | funcion
             | declaracion_funcion
             | llamada_funcion
-            | comentario
+            | operacion
             | escribir_consola
             | return
             ;
@@ -86,15 +84,23 @@ return  : RETURN factores_funcion PYC
         | RETURN PYC
         ;
 
-declaracion: tipo ID inicializacion_variable lista_identificadores PYC;
+operacion : NUMERO OPERADOR NUMERO PYC
+          | ID OPERADOR ID PYC
+          | ID OPERADOR NUMERO PYC
+          | NUMERO OPERADOR ID PYC
+          ;
+
+declaracion: tipo ID IGUAL inicializacion_variable lista_identificadores PYC;
 
 tipo: DT;
 
-inicializacion_variable: IGUAL NUMERO
-                        |
+inicializacion_variable:NUMERO
+                        | ID
+                        | PA expresion PC
+                        | expresion
                         ;
 
-lista_identificadores: COMA ID inicializacion_variable lista_identificadores
+lista_identificadores: COMA ID IGUAL inicializacion_variable lista_identificadores
                       |
                       ;
 
@@ -106,8 +112,10 @@ expresion: termino exp
 termino : factor term 
         ;
 
-exp     : MAS termino exp
-        | MENOS termino exp
+exp     : MAS expresion
+        | MENOS expresion
+        | MULTIPLICACION expresion
+        | DIVISION expresion
         | 
         ;
 
@@ -129,6 +137,7 @@ if      : IF condicion bloque else
 
 else    : ELSE bloque
         | ELSE IF condicion bloque
+        |
         ;
 
 while   : WHILE condicion bloque
@@ -155,34 +164,32 @@ listado_comparacion : LOGICO comparacion listado_comparacion
 for     : FOR ciclo bloque
         ;
 
-ciclo   : PA declaracion comparacion PYC ID cambio_variable PC
+ciclo   : PA declaracion comparacion PYC asignacion PC
         ;
 
 cambio_variable : ID INCREMENTAR
                 | ID DECREMENTAR
                 ;
 
-funcion : tipo_funcion ID PA variables_funcion PC bloque
+funcion : tipo_funcion ID PA parametros PC bloque
         ;
 
-declaracion_funcion : tipo_funcion ID PA variables_funcion PC bloque
+declaracion_funcion : tipo_funcion ID PA parametros PC bloque
                     ;
 
-llamada_funcion : ID PA lista_variables_funcion PC PYC
+llamada_funcion : ID PA lista_parametros PC PYC
                 ;
 
 tipo_funcion : TIPOSFUNCION
              ;
 
-variables_funcion : tipo ID lista_variables_funcion
-                  | tipo lista_variables_funcion
-                  |
-                  ;
+parametros : tipo ID lista_parametros
+           |
+           ;
 
-lista_variables_funcion : COMA tipo ID lista_variables_funcion
-                        | COMA tipo lista_variables_funcion
-                        |
-                        ;
+lista_parametros : COMA tipo ID lista_parametros
+                 |
+                 ;
 
 factores_funcion: NUMERO listado_factores_funcion
                 | ID listado_factores_funcion
@@ -190,14 +197,9 @@ factores_funcion: NUMERO listado_factores_funcion
                 ;
 
 listado_factores_funcion: COMA factores_funcion listado_factores_funcion
-                        | COMA ID listado_factores_funcion
-                        | COMA PA expresion PC listado_factores_funcion
                         |
                         ;
 
-comentario : '//' .*? 
-           ;
 
-escribir_consola : PRINTF PA (COMILLA .*? COMILLA | COMILLASIMPLE .*? COMILLASIMPLE) PYC
+escribir_consola : PRINTF PA (COMILLA .*? COMILLA | COMILLASIMPLE .*? COMILLASIMPLE) PC PYC
                  ;
-

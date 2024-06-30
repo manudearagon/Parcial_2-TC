@@ -1,0 +1,195 @@
+Código Intermedio
+
+Código de Tres Direcciones (Three Address Code)
+
+x = y op z  (Operación Base)
+x = y
+label l1
+jmp l1
+if x op y njmp l1
+push x
+pop x
+
+
+ADD ax, bx, cx
+
+Traducción
+Requiere:
+   1) Generador de variables temporales (t0, t1, ...)
+   2) Generador de etiquetas (l0, l1, ...)
+
+a = b * c - d * e;
+
+t0 = b * c
+t1 = d * e
+t2 = t0 - t1
+a = t2
+
+a = b - c * d + e;
+
+t0 = c * d
+t1 = b - t0
+t2 = t1 + e
+a = t2
+
+---
+if (x > 0)
+    y = -1 * x
+else
+    y = x
+
+t0 = x > 0
+if t0 njmp l0
+    y = -1 * x
+    jmp l1
+label l0
+    y = x
+label l1
+
+---
+x = 0
+while (x < 10) {
+    y = y + x;
+    x = x + 1;
+}
+
+x = 0
+label l0
+t0 = x < 10
+if t0 njmp l1
+    y = y + x;
+    x = x + 1;
+    jmp l0
+label l1
+
+
+---
+for (x = 0; x < 10; x = x + 1) {
+    y = y + x;
+}
+
+x = 0
+label l0
+t0 = x < 10
+if t0 njmp l1
+    y = y + x;
+    x = x + 1;
+    jmp l0
+label l1
+
+---
+int f (int a, int b) {
+    return a + b;
+}
+
+<...>
+
+x = 10;
+y = 5;
+z = f (x, y);
+
+
+label l0
+pop t0
+pop b
+pop a
+t1 = a + b
+push t1
+jmp t0
+
+<...>
+
+push x
+push y
+push l1
+jmp l0
+label l1
+pop z
+
+********************************
+Optimización de Código Intermedio
+
+Eliminación de acciones innecesarias
+
+x1 = -b + b * b - 4 * a * c;
+x2 = -b - b * b - 4 * a * c;
+
+t0 = b * b
+t1 = -b + t0
+t2 = 4 * a
+t3 = t2 * c
+t4 = t1 - t3 
+x1 = t4
+
+t5 = b * b
+t6 = -b - t5
+t7 = 4 * a
+t8 = t7 * c
+t9 = t6 - t8
+x2 = t9
+
++++
+t0 = b * b
+t1 = -b + t0
+t2 = 4 * a
+t3 = t2 * c
+t4 = t1 - t3 
+x1 = t4
+
+t6 = -b - t0
+t7 = 4 * a
+t8 = t7 * c
+t9 = t6 - t8
+x2 = t9
+
++++
+t0 = b * b
+t1 = -b + t0
+t2 = 4 * a
+t3 = t2 * c
+t4 = t1 - t3 
+x1 = t4
+
+t6 = -b - t0
+t8 = t2 * c
+t9 = t6 - t8
+x2 = t9
+
++++
+t0 = b * b
+t1 = -b + t0
+t2 = 4 * a
+t3 = t2 * c
+t4 = t1 - t3 
+x1 = t4
+
+t6 = -b - t0
+t9 = t6 - t3
+x2 = t9
+
++++
+
+Propagación de constantes
+
+x = 10;
+y = 4;
+z = c - x  * y;
+
++++
+x = 10
+y = 4
+t0 = x  * y
+t1 = c - t0
+z = t1
+
++++
+t0 = 10 * 4
+t1 = c - t0
+z = t1
+
++++
+t1 = c - 40
+z = t1
+
++++
+z = c - 40

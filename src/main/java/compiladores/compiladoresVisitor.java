@@ -1,7 +1,7 @@
 // Generated from /Users/manud/Desktop/TC/Parcial 2/src/main/java/compiladores/compiladores.g4 by ANTLR 4.13.1
 
  package compiladores;
- 
+
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -36,6 +36,12 @@ public interface compiladoresVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitReturn(compiladoresParser.ReturnContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#operacion}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOperacion(compiladoresParser.OperacionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link compiladoresParser#declaracion}.
 	 * @param ctx the parse tree
@@ -187,17 +193,17 @@ public interface compiladoresVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTipo_funcion(compiladoresParser.Tipo_funcionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link compiladoresParser#variables_funcion}.
+	 * Visit a parse tree produced by {@link compiladoresParser#parametros}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVariables_funcion(compiladoresParser.Variables_funcionContext ctx);
+	T visitParametros(compiladoresParser.ParametrosContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link compiladoresParser#lista_variables_funcion}.
+	 * Visit a parse tree produced by {@link compiladoresParser#lista_parametros}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLista_variables_funcion(compiladoresParser.Lista_variables_funcionContext ctx);
+	T visitLista_parametros(compiladoresParser.Lista_parametrosContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link compiladoresParser#factores_funcion}.
 	 * @param ctx the parse tree
@@ -210,12 +216,6 @@ public interface compiladoresVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitListado_factores_funcion(compiladoresParser.Listado_factores_funcionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link compiladoresParser#comentario}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitComentario(compiladoresParser.ComentarioContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link compiladoresParser#escribir_consola}.
 	 * @param ctx the parse tree
