@@ -88,6 +88,7 @@ operacion : NUMERO OPERADOR NUMERO PYC
           | ID OPERADOR ID PYC
           | ID OPERADOR NUMERO PYC
           | NUMERO OPERADOR ID PYC
+          | ID cambio_variable PYC
           ;
 
 declaracion: tipo ID IGUAL inicializacion_variable lista_identificadores PYC;
@@ -116,6 +117,8 @@ exp     : MAS expresion
         | MENOS expresion
         | MULTIPLICACION expresion
         | DIVISION expresion
+        | INCREMENTAR
+        | DECREMENTAR
         | 
         ;
 
@@ -164,18 +167,18 @@ listado_comparacion : LOGICO comparacion listado_comparacion
 for     : FOR ciclo bloque
         ;
 
-ciclo   : PA declaracion comparacion PYC asignacion PC
+ciclo   : PA declaracion comparacion PYC cambio_variable PC
         ;
 
 cambio_variable : ID INCREMENTAR
                 | ID DECREMENTAR
                 ;
 
-funcion : tipo_funcion ID PA parametros PC bloque
-        ;
-
 declaracion_funcion : tipo_funcion ID PA parametros PC bloque
                     ;
+
+funcion : tipo_funcion ID PA parametros PC bloque
+        ;
 
 llamada_funcion : ID PA lista_parametros PC PYC
                 ;

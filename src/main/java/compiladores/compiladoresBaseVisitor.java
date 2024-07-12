@@ -202,14 +202,14 @@ public class compiladoresBaseVisitor<T> extends AbstractParseTreeVisitor<T> impl
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFuncion(compiladoresParser.FuncionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitDeclaracion_funcion(compiladoresParser.Declaracion_funcionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDeclaracion_funcion(compiladoresParser.Declaracion_funcionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFuncion(compiladoresParser.FuncionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

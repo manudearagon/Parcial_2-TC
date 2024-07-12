@@ -270,16 +270,6 @@ public interface compiladoresListener extends ParseTreeListener {
 	 */
 	void exitCambio_variable(compiladoresParser.Cambio_variableContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link compiladoresParser#funcion}.
-	 * @param ctx the parse tree
-	 */
-	void enterFuncion(compiladoresParser.FuncionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link compiladoresParser#funcion}.
-	 * @param ctx the parse tree
-	 */
-	void exitFuncion(compiladoresParser.FuncionContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link compiladoresParser#declaracion_funcion}.
 	 * @param ctx the parse tree
 	 */
@@ -289,6 +279,16 @@ public interface compiladoresListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDeclaracion_funcion(compiladoresParser.Declaracion_funcionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link compiladoresParser#funcion}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncion(compiladoresParser.FuncionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link compiladoresParser#funcion}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncion(compiladoresParser.FuncionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link compiladoresParser#llamada_funcion}.
 	 * @param ctx the parse tree
