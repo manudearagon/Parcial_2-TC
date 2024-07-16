@@ -1,4 +1,7 @@
-int x = 10, y = 20;
-int z = 30;
-
-x = 5 + 3 * y + z;
+int x = 0;
+int y = 0;
+while (x < 10)
+{
+    y = y + x;
+    x = x + 1;
+}

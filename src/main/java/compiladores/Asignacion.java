@@ -10,9 +10,11 @@ import compiladores.compiladoresParser.TerminoContext;
 
 public class Asignacion {
     private int tempVarCounter = 0;
-     String generateIntermediateCode(ExpresionContext ctx, Stack<String> tempStack) {
+
+    String generateIntermediateCode(ExpresionContext ctx, Stack<String> tempStack) {
         StringBuilder code = new StringBuilder();
         
+        // Procesar el término
         code.append(generateIntermediateCode(ctx.termino(), tempStack));
         if (ctx.exp() != null && !ctx.exp().getText().isEmpty()) {
             code.append(generateIntermediateCode(ctx.exp(), tempStack));
@@ -24,6 +26,7 @@ public class Asignacion {
     private String generateIntermediateCode(TerminoContext ctx, Stack<String> tempStack) {
         StringBuilder code = new StringBuilder();
         
+        // Procesar el factor
         code.append(generateIntermediateCode(ctx.factor(), tempStack));
         if (ctx.term() != null && !ctx.term().getText().isEmpty()) {
             code.append(generateIntermediateCode(ctx.term(), tempStack));
@@ -88,7 +91,7 @@ public class Asignacion {
             String right = tempStack.pop();
             String left = tempStack.pop();
             String tempVar = getNewTempVar();
-            code.append(tempVar).append(" = ").append(left).append(" ").append(ctx.getChild(1).getText()).append(" ").append(right).append("\n");
+            code.append(tempVar).append(" = ").append(left).append(" ").append(ctx.getChild(0).getText()).append(" ").append(right).append("\n");
             tempStack.push(tempVar);
         }
     

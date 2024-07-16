@@ -104,6 +104,7 @@ class Variable
  }
 
 class Funcion extends Variable {
+    @SuppressWarnings("unused")
     private List<DataType> args;
 }
 

@@ -30,6 +30,7 @@ public class App {
 
         visitor.visit(tree);
 
-        System.out.println(tree.toStringTree(parser));
+        // ? Por ahora queda comentado
+        // System.out.println(tree.toStringTree(parser));
     }
 }
