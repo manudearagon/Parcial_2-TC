@@ -38,6 +38,9 @@ NOT: '!';
 
 WS: [ \t\n\r]+ -> skip;
 
+LINE_COMMENT: '//' ~[\r\n]* -> skip;
+BLOCK_COMMENT: '/*' .*? '*/' -> skip;
+
 // Palabras reservadas
 WHILE: 'while';
 FOR: 'for';
