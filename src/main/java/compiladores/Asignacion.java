@@ -19,13 +19,11 @@ public class Asignacion {
         if (ctx.exp() != null && !ctx.exp().getText().isEmpty()) {
             code.append(generateIntermediateCode(ctx.exp(), tempStack));
         }
-        
         return code.toString();
     }
 
     private String generateIntermediateCode(TerminoContext ctx, Stack<String> tempStack) {
         StringBuilder code = new StringBuilder();
-        
         // Procesar el factor
         code.append(generateIntermediateCode(ctx.factor(), tempStack));
         if (ctx.term() != null && !ctx.term().getText().isEmpty()) {
@@ -65,6 +63,7 @@ public class Asignacion {
         }
         
         if (ctx.MAS() != null || ctx.MENOS() != null || ctx.MULTIPLICACION() != null || ctx.DIVISION() != null) {
+
             String right = tempStack.pop();
             String left = tempStack.pop();
             String tempVar = getNewTempVar();
@@ -77,6 +76,7 @@ public class Asignacion {
 
     private String generateIntermediateCode(TermContext ctx, Stack<String> tempStack) {
         StringBuilder code = new StringBuilder();
+
         
         // Generar código intermedio para el factor
         code.append(generateIntermediateCode(ctx.factor(), tempStack));
