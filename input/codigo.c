@@ -1,7 +1,12 @@
 int x = 0;
 int y = 0;
-while (x < 10)
+
+if (x > 0)
 {
-    y = y + x;
-    x = x + 1;
+    y = 1 * x;
+    return y;
+}
+else
+{
+    y = x;
 }

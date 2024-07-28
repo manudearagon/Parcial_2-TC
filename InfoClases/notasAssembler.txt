@@ -18,6 +18,7 @@ Requiere:
    1) Generador de variables temporales (t0, t1, ...)
    2) Generador de etiquetas (l0, l1, ...)
 
+--- Asignacion - Funciona bien
 a = b * c - d * e;
 
 t0 = b * c
@@ -32,7 +33,8 @@ t1 = b - t0
 t2 = t1 + e
 a = t2
 
----
+--- If Statement - 
+
 if (x > 0)
     y = -1 * x
 else
@@ -63,8 +65,9 @@ if t0 njmp l1
 label l1
 
 
----
-for (x = 0; x < 10; x = x + 1) {
+--- LISTO Y REVISADO
+for (int x = 0; x < 10; x++)
+{
     y = y + x;
 }
 

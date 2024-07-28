@@ -8,6 +8,7 @@ public class CustomVisitor extends compiladoresBaseVisitor<String> {
    private Integer declarations = 0;
    private Asignacion asignacion = new Asignacion();
    private Declaracion declaracion = new Declaracion();
+   private For forContext = new For();
    
 
    @Override
@@ -26,8 +27,7 @@ public class CustomVisitor extends compiladoresBaseVisitor<String> {
        // Generar código intermedio
        Stack<String> tempStack = new Stack<>();
        String intermediateCode = asignacion.generateIntermediateCode(ctx.expresion(), tempStack);
-       String finalTemp = tempStack.pop();
-   
+       String finalTemp = tempStack.pop(); 
        System.out.println(intermediateCode);
        System.out.println(variable + " = " + finalTemp);
        return super.visitAsignacion(ctx);
@@ -37,10 +37,6 @@ public class CustomVisitor extends compiladoresBaseVisitor<String> {
     public String visitDeclaracion(compiladoresParser.DeclaracionContext ctx) {
         declarations++;
         System.out.println("Declarando variable --> " + ctx.getChild(1).getText());
-        Stack<String> tempStack = new Stack<>();
-        String intermediateCodeDeclarations = declaracion.generateIntermediateCode(ctx, tempStack);
-        // * No es necesario generar el código intermedio de las declaraciones en este caso
-        // System.out.println(intermediateCodeDeclarations);
         return super.visitDeclaracion(ctx);   
     }
 
@@ -61,4 +57,13 @@ public class CustomVisitor extends compiladoresBaseVisitor<String> {
 
         return super.visitWhile(ctx);
     } 
+
+    @Override
+    public String visitFor(compiladoresParser.ForContext ctx) {
+        if(ctx != null) {
+            String intermediateCodeFor = forContext.generateIntermediateCode(ctx);
+            System.out.println(intermediateCodeFor);
+        }
+        return super.visitFor(ctx);
+    }
 }

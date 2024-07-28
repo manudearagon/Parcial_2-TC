@@ -18,12 +18,24 @@ public class If {
         // Saltar al bloque else si la condición es falsa
         code.append("if ").append(tempStack.pop()).append(" njmp ").append(labelElse).append("\n");
 
+        // Agregar lineas de codigo que se encuentran en el bloque if
+        String[] instrucciones = ctx.bloque().instrucciones().getText().split(";");
+        for (String instruccion : instrucciones) {
+            code.append("\t").append(instruccion).append("\n");
+        }
+
         // Saltar al final después de ejecutar el bloque if
-        code.append("jmp ").append(labelEnd).append("\n");
+        code.append("\t").append("jmp ").append(labelEnd).append("\n");
 
         // Etiqueta else
         code.append("label ").append(labelElse).append("\n");
-
+        // Agregar lineas de codigo que se encuentran en el bloque else
+        if (ctx.else_().bloque() != null) {
+            instrucciones = ctx.else_().bloque().instrucciones().getText().split(";");
+            for (String instruccion : instrucciones) {
+                code.append("\t").append(instruccion).append("\n");
+            }
+        }
         // Etiqueta de fin
         code.append("label ").append(labelEnd).append("\n");
 
