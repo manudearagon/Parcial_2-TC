@@ -116,3 +116,5 @@ hs_err_pid*
 replay_pid*
 
 target/
+target/**/
+src/main/java/compiladores/Antlr/
