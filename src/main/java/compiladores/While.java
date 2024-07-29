@@ -8,7 +8,7 @@ public class While {
 
     public String generateIntermediateCode(compiladoresParser.WhileContext ctx, Stack<String> tempStack) {
         StringBuilder code = new StringBuilder();
-        
+
 
         // Generar una nueva etiqueta para el inicio del bucle
         String startLabel = getNewLabel();
@@ -24,8 +24,14 @@ public class While {
         String tempVar = tempStack.pop();
         code.append("if ").append(tempVar).append(" njmp ").append(endLabel).append("\n");
 
+        // Agregar lineas de codigo que se encuentran en el bloque if
+        String[] instrucciones = ctx.bloque().instrucciones().getText().split(";");
+        for (String instruccion : instrucciones) {
+            code.append("\t").append(instruccion).append(";").append("\n");
+        }
+
         // Añadir instrucción de salto incondicional al inicio del bucle
-        code.append("jmp ").append(startLabel).append("\n");
+        code.append("\t").append("jmp ").append(startLabel).append("\n");
 
         // Etiqueta de fin del bucle
         code.append("label ").append(endLabel).append("\n");
@@ -43,7 +49,7 @@ public class While {
         return code.toString();
     }
 
-    
+
     private String generateIntermediateCode(compiladoresParser.ComparacionContext ctx, Stack<String> tempStack) {
         StringBuilder code = new StringBuilder();
         String tempVar = getNewTempVar();
