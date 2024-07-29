@@ -137,7 +137,7 @@ comparacion: factor comparador factor;
 comparador:
 	MAYOR
 	| MENOR
-	| MAYORIGUAL
+	| MAYORIGUAL 
 	| MENORIGUAL
 	| IGUALIGUAL
 	| DIFERENTE;

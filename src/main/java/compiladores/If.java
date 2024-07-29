@@ -21,7 +21,7 @@ public class If {
         // Agregar lineas de codigo que se encuentran en el bloque if
         String[] instrucciones = ctx.bloque().instrucciones().getText().split(";");
         for (String instruccion : instrucciones) {
-            code.append("\t").append(instruccion).append("\n");
+            code.append("\t").append(instruccion).append(";").append("\n");
         }
 
         // Saltar al final después de ejecutar el bloque if
@@ -33,7 +33,7 @@ public class If {
         if (ctx.else_().bloque() != null) {
             instrucciones = ctx.else_().bloque().instrucciones().getText().split(";");
             for (String instruccion : instrucciones) {
-                code.append("\t").append(instruccion).append("\n");
+                code.append("\t").append(instruccion).append(";").append("\n");
             }
         }
         // Etiqueta de fin

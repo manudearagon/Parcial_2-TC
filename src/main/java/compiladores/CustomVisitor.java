@@ -2,12 +2,10 @@ package compiladores;
 import java.util.Stack;
 import compiladores.compiladoresParser.ProgramaContext;
 
-
 public class CustomVisitor extends compiladoresBaseVisitor<String> {
    private Integer assignments = 0;
    private Integer declarations = 0;
    private Asignacion asignacion = new Asignacion();
-   private Declaracion declaracion = new Declaracion();
    private For forContext = new For();
    
 
@@ -36,7 +34,8 @@ public class CustomVisitor extends compiladoresBaseVisitor<String> {
     @Override
     public String visitDeclaracion(compiladoresParser.DeclaracionContext ctx) {
         declarations++;
-        System.out.println("Declarando variable --> " + ctx.getChild(1).getText());
+        String intermediateCode = new Declaracion().generateIntermediateCode(ctx);
+        System.out.println(intermediateCode);
         return super.visitDeclaracion(ctx);   
     }
 
@@ -54,7 +53,6 @@ public class CustomVisitor extends compiladoresBaseVisitor<String> {
         Stack<String> tempStack = new Stack<>();
         String intermediateCodeWhile = new While().generateIntermediateCode(ctx, tempStack);
         System.out.println(intermediateCodeWhile);
-
         return super.visitWhile(ctx);
     } 
 

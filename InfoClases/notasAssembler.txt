@@ -13,10 +13,23 @@ pop x
 
 ADD ax, bx, cx
 
+// TODO Correcciones a realizar
+Integrar las asignaciones y declaraciones dentro de las instrucciones de cada metodo
+Sino se van a mostrar abajo directamente y no es lo ideal
+
 Traducción
 Requiere:
    1) Generador de variables temporales (t0, t1, ...)
    2) Generador de etiquetas (l0, l1, ...)
+
+---------
+Clases Finalizadas
+Declaracion
+Asignacion
+If
+While
+For
+---------
 
 --- Asignacion - Funciona bien
 a = b * c - d * e;
@@ -33,7 +46,7 @@ t1 = b - t0
 t2 = t1 + e
 a = t2
 
---- If Statement - 
+--- If Statement - Funciona bien
 
 if (x > 0)
     y = -1 * x
@@ -48,7 +61,7 @@ label l0
     y = x
 label l1
 
----
+--- While Statement - 
 x = 0
 while (x < 10) {
     y = y + x;

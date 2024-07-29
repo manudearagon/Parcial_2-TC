@@ -53,7 +53,7 @@ TIPOSFUNCION: DT | 'void' | 'char' | 'string' | 'bool';
 OPERADOR: MAS | MENOS | MULTIPLICACION | DIVISION | MODULO;
 LOGICO: AND | OR | NOT;
 
-NUMERO: DIGITO+;
+NUMERO: '-'? DIGITO+;
 ID: (LETRA | '_') (LETRA | DIGITO | '_')*;
 
 // Reglas
@@ -137,7 +137,7 @@ comparacion: factor comparador factor;
 comparador:
 	MAYOR
 	| MENOR
-	| MAYORIGUAL
+	| MAYORIGUAL 
 	| MENORIGUAL
 	| IGUALIGUAL
 	| DIFERENTE;
