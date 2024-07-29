@@ -1,4 +1,4 @@
-// Generated from /Users/manud/Desktop/TC/Parcial 2/src/main/java/compiladores/compiladores.g4 by ANTLR 4.13.1
+// Generated from c:/Users/Mati/Documents/GitHub/Parcial_2-TC/src/main/java/compiladores/compiladores.g4 by ANTLR 4.13.1
 
  package compiladores;
 
