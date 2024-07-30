@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.LinkedList;
 import java.util.List;
+
 public class TablaSimbolos {
     private static TablaSimbolos instance;
 
@@ -25,12 +26,14 @@ public class TablaSimbolos {
     }
 
     public void removeScope() {
-        if(symbolTable.isEmpty()) return;
+        if (symbolTable.isEmpty())
+            return;
         symbolTable.remove(symbolTable.size() - 1);
     }
 
-    public void addSymbol(String name , Variable id) {
-        if(symbolTable.isEmpty() && Boolean.TRUE.equals(containsSymbol(name))) return;
+    public void addSymbol(String name, Variable id) {
+        if (symbolTable.isEmpty() && Boolean.TRUE.equals(containsSymbol(name)))
+            return;
         Map<String, Variable> currentScope = symbolTable.get(symbolTable.size() - 1);
         currentScope.put(name, id);
     }
@@ -61,10 +64,7 @@ public class TablaSimbolos {
     }
 }
 
-
-
-class Variable 
- {
+class Variable {
     private String name;
     private String dataType;
     private Boolean initialized;
@@ -101,7 +101,7 @@ class Variable
     public void setUsed(Boolean used) {
         this.used = used;
     }
- }
+}
 
 class Funcion extends Variable {
     @SuppressWarnings("unused")
@@ -109,8 +109,8 @@ class Funcion extends Variable {
 }
 
 enum DataType {
-    VOID, 
-    INT, 
+    VOID,
+    INT,
     DOUBLE,
     STRING,
     CHAR,

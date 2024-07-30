@@ -1,6 +1,7 @@
 package compiladores;
 
 import java.util.Stack;
+
 public class If {
     private int labelCounter = 0;
 
@@ -21,7 +22,7 @@ public class If {
         // Agregar lineas de codigo que se encuentran en el bloque if
         String[] instrucciones = ctx.bloque().instrucciones().getText().split(";");
         for (String instruccion : instrucciones) {
-            code.append("\t").append(instruccion).append("\n");
+            code.append("\t").append(instruccion).append(";").append("\n");
         }
 
         // Saltar al final después de ejecutar el bloque if
@@ -33,7 +34,7 @@ public class If {
         if (ctx.else_().bloque() != null) {
             instrucciones = ctx.else_().bloque().instrucciones().getText().split(";");
             for (String instruccion : instrucciones) {
-                code.append("\t").append(instruccion).append("\n");
+                code.append("\t").append(instruccion).append(";").append("\n");
             }
         }
         // Etiqueta de fin
@@ -56,7 +57,8 @@ public class If {
         StringBuilder code = new StringBuilder();
         String tempVar = getNewTempVar();
         tempStack.push(tempVar);
-        code.append(tempVar).append(" = ").append(ctx.getChild(0).getText()).append(" ").append(ctx.getChild(1).getText()).append(" ").append(ctx.getChild(2).getText()).append("\n");
+        code.append(tempVar).append(" = ").append(ctx.getChild(0).getText()).append(" ")
+                .append(ctx.getChild(1).getText()).append(" ").append(ctx.getChild(2).getText()).append("\n");
         return code.toString();
     }
 

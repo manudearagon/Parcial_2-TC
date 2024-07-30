@@ -13,18 +13,18 @@ public class App {
 
         // create a lexer that feeds off of input CharStream
         compiladoresLexer lexer = new compiladoresLexer(input);
-        
+
         // create a buffer of tokens pulled from the lexer
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        
+
         // create a parser that feeds off the tokens buffer
         compiladoresParser parser = new compiladoresParser(tokens);
-        
+
         CustomListener escucha = new CustomListener();
-        
+
         parser.addParseListener(escucha);
-        
-        ParseTree tree =  parser.programa();
+
+        ParseTree tree = parser.programa();
 
         CustomVisitor visitor = new CustomVisitor();
 

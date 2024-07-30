@@ -1,16 +1,3 @@
 {
-  "java.configuration.updateBuildConfiguration": "automatic",
-  // Generacion archivos ANTLR en el paquete Java
-  "antlr4.generation": {
-    "mode": "external",
-    "language": "Java",
-    //"language": "Python3",
-    "listeners": true,
-    "visitors": true
-  },
-  "antlr4.debug": {
-    "visualParseTreeHorizontal": false,
-    "visualParseTreeClustered": true
-  },
-  "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true
 }
