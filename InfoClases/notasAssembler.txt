@@ -49,7 +49,7 @@ label l0
 label l1
 
 ---
-x = 0
+int x = 0;
 while (x < 10) {
     y = y + x;
     x = x + 1;

@@ -181,6 +181,12 @@ public interface compiladoresVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFuncion(compiladoresParser.FuncionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#bloque_funcion}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBloque_funcion(compiladoresParser.Bloque_funcionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link compiladoresParser#llamada_funcion}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

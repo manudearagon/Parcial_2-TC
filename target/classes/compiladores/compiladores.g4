@@ -152,7 +152,9 @@ cambio_variable: ID INCREMENTAR | ID DECREMENTAR;
 
 declaracion_funcion: tipo_funcion ID PA parametros PC bloque;
 
-funcion: tipo_funcion ID PA parametros PC bloque;
+funcion: tipo_funcion ID PA parametros PC bloque_funcion;
+
+bloque_funcion: LA instrucciones return LC;
 
 llamada_funcion: ID PA lista_parametros PC PYC;
 

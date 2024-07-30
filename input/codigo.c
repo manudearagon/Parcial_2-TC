@@ -1,12 +1,4 @@
-int x = 0;
-int y = 0;
-
-if (x > 0)
+int f(int a, int b)
 {
-    y = 1 * x;
-    return y;
-}
-else
-{
-    y = x;
+    return a + b;
 }
