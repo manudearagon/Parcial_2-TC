@@ -148,7 +148,7 @@ for: FOR ciclo bloque;
 
 ciclo: PA declaracion comparacion PYC cambio_variable PC;
 
-cambio_variable: ID INCREMENTAR | ID DECREMENTAR;
+cambio_variable: ID exp;
 
 declaracion_funcion: tipo_funcion ID PA parametros PC bloque;
 

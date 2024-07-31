@@ -1,7 +1,6 @@
 package compiladores;
 
 import java.util.Stack;
-
 public class If {
     private int labelCounter = 0;
 
@@ -57,8 +56,7 @@ public class If {
         StringBuilder code = new StringBuilder();
         String tempVar = getNewTempVar();
         tempStack.push(tempVar);
-        code.append(tempVar).append(" = ").append(ctx.getChild(0).getText()).append(" ")
-                .append(ctx.getChild(1).getText()).append(" ").append(ctx.getChild(2).getText()).append("\n");
+        code.append(tempVar).append(" = ").append(ctx.getChild(0).getText()).append(" ").append(ctx.getChild(1).getText()).append(" ").append(ctx.getChild(2).getText()).append("\n");
         return code.toString();
     }
 

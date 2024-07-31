@@ -13,7 +13,7 @@ public class Asignacion {
 
     String generateIntermediateCode(ExpresionContext ctx, Stack<String> tempStack) {
         StringBuilder code = new StringBuilder();
-
+        
         // Procesar el término
         code.append(generateIntermediateCode(ctx.termino(), tempStack));
         if (ctx.exp() != null && !ctx.exp().getText().isEmpty()) {
@@ -29,13 +29,12 @@ public class Asignacion {
         if (ctx.term() != null && !ctx.term().getText().isEmpty()) {
             code.append(generateIntermediateCode(ctx.term(), tempStack));
         }
-
+        
         if (ctx.getChildCount() == 3) {
             String right = tempStack.pop();
             String left = tempStack.pop();
             String tempVar = getNewTempVar();
-            code.append(tempVar).append(" = ").append(left).append(" ").append(ctx.getChild(1).getText()).append(" ")
-                    .append(right).append("\n");
+            code.append(tempVar).append(" = ").append(left).append(" ").append(ctx.getChild(1).getText()).append(" ").append(right).append("\n");
             tempStack.push(tempVar);
         }
 
@@ -44,7 +43,7 @@ public class Asignacion {
 
     private String generateIntermediateCode(FactorContext ctx, Stack<String> tempStack) {
         StringBuilder code = new StringBuilder();
-
+        
         if (ctx.ID() != null) {
             tempStack.push(ctx.ID().getText());
         } else if (ctx.NUMERO() != null) {
@@ -58,18 +57,16 @@ public class Asignacion {
 
     private String generateIntermediateCode(ExpContext ctx, Stack<String> tempStack) {
         StringBuilder code = new StringBuilder();
-
+        
         if (ctx.expresion() != null) {
             code.append(generateIntermediateCode(ctx.expresion(), tempStack));
         }
-
-        if (ctx.MAS() != null || ctx.MENOS() != null || ctx.MULTIPLICACION() != null || ctx.DIVISION() != null) {
-
+        
+        if (ctx.MAS() != null || ctx.MENOS() != null) {
             String right = tempStack.pop();
             String left = tempStack.pop();
             String tempVar = getNewTempVar();
-            code.append(tempVar).append(" = ").append(left).append(" ").append(ctx.getChild(0).getText()).append(" ")
-                    .append(right).append("\n");
+            code.append(tempVar).append(" = ").append(left).append(" ").append(ctx.MAS() != null ? "+" : "-").append(" ").append(right).append("\n");
             tempStack.push(tempVar);
         }
 
@@ -79,24 +76,24 @@ public class Asignacion {
     private String generateIntermediateCode(TermContext ctx, Stack<String> tempStack) {
         StringBuilder code = new StringBuilder();
 
+        
         // Generar código intermedio para el factor
         code.append(generateIntermediateCode(ctx.factor(), tempStack));
-
+        
         // Generar código intermedio para el siguiente término, si existe
         if (ctx.term() != null && !ctx.term().getText().isEmpty()) {
             code.append(generateIntermediateCode(ctx.term(), tempStack));
         }
-
+        
         // Si hay un operador, procesar los operandos
         if (ctx.getChildCount() == 3) {
             String right = tempStack.pop();
             String left = tempStack.pop();
             String tempVar = getNewTempVar();
-            code.append(tempVar).append(" = ").append(left).append(" ").append(ctx.getChild(0).getText()).append(" ")
-                    .append(right).append("\n");
+            code.append(tempVar).append(" = ").append(left).append(" ").append(ctx.MULTIPLICACION() != null ? "*" : "/").append(" ").append(right).append("\n");
             tempStack.push(tempVar);
         }
-
+    
         return code.toString();
     }
 

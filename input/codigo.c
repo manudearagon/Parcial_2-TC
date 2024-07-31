@@ -1,4 +1,11 @@
-int f(int a, int b)
+int x = 0;
+int y = 0;
+if (x > 0)
 {
-    return a + b;
+    y = -1 * x;
+}
+else
+{
+
+    y = x;
 }

@@ -8,7 +8,7 @@ public class While {
 
     public String generateIntermediateCode(compiladoresParser.WhileContext ctx, Stack<String> tempStack) {
         StringBuilder code = new StringBuilder();
-
+        
         // Generar una nueva etiqueta para el inicio del bucle
         String startLabel = getNewLabel();
         String endLabel = getNewLabel();
@@ -24,11 +24,11 @@ public class While {
 
         code.append("if ").append(tempVar).append(" njmp ").append(endLabel).append("\n");
 
-        // Agregar lineas de codigo que se encuentran en el bloque if
-        String[] instrucciones = ctx.bloque().instrucciones().getText().split(";");
-        for (String instruccion : instrucciones) {
-            code.append("\t").append(instruccion).append(";").append("\n");
-        }
+         // Agregar lineas de codigo que se encuentran en el bloque if
+         String[] instrucciones = ctx.bloque().instrucciones().getText().split(";");
+         for (String instruccion : instrucciones) {
+             code.append("\t").append(instruccion).append(";").append("\n");
+         }
 
         // Añadir instrucción de salto incondicional al inicio del bucle
         code.append("\t").append("jmp ").append(startLabel).append("\n");
@@ -49,8 +49,7 @@ public class While {
         StringBuilder code = new StringBuilder();
         String tempVar = getNewTempVar();
         tempStack.push(tempVar);
-        code.append(tempVar).append(" = ").append(ctx.getChild(0).getText()).append(" ")
-                .append(ctx.getChild(1).getText()).append(" ").append(ctx.getChild(2).getText()).append("\n");
+        code.append(tempVar).append(" = ").append(ctx.getChild(0).getText()).append(" ").append(ctx.getChild(1).getText()).append(" ").append(ctx.getChild(2).getText()).append("\n");
         return code.toString();
     }
 
