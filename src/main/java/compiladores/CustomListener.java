@@ -165,21 +165,21 @@ public class CustomListener extends compiladoresBaseListener {
 
         String id = ctx.ID().getText();
 
-        if (symbolTable.containsSymbol(id) == false) {
-            Funcion function = new Funcion();
+        // if (symbolTable.containsSymbol(id) == false) {
+        //     Funcion function = new Funcion();
 
-            String tipo = ctx.getChild(0).getText();
+        //     String tipo = ctx.getChild(0).getText();
 
-            function.setName(id);
-            function.setDataType(tipo);
-            function.setUsed(false);
+        //     function.setName(id);
+        //     function.setDataType(tipo);
+        //     function.setUsed(false);
 
-            symbolTable.addSymbol(id, function);
-         }
-        else {
-            System.out.println("Error semantico: Doble declaracion del mismo identificador: " + ctx.getText());
-            errors++;
-        }
+        //     symbolTable.addSymbol(id, function);
+        //  }
+        // else {
+        //     System.out.println("Error semantico: Doble declaracion del mismo identificador: " + ctx.getText());
+        //     errors++;
+        // }
     }
 
     
@@ -189,22 +189,22 @@ public class CustomListener extends compiladoresBaseListener {
         super.exitDeclaracion_funcion(ctx);
         String nombre = ctx.ID().getText();
 
-        if (symbolTable.validateActualContext(nombre) == false) {
-            Funcion function = new Funcion();
+        // if (symbolTable.validateActualContext(nombre) == false) {
+        //     Funcion function = new Funcion();
 
-            String tipo = ctx.getChild(0).getText();
+        //     String tipo = ctx.getChild(0).getText();
 
-            function.setName(nombre);
-            function.setDataType(tipo);
-            function.setUsed(false);
+        //     function.setName(nombre);
+        //     function.setDataType(tipo);
+        //     function.setUsed(false);
 
-            symbolTable.addSymbol(nombre, function);
+        //     symbolTable.addSymbol(nombre, function);
 
-          }
-        else {
-            System.out.println("Error semantico: Doble declaracion del mismo identificador: " + ctx.getText());
-            errors++;
-        }
+        //   }
+        // else {
+        //     System.out.println("Error semantico: Doble declaracion del mismo identificador: " + ctx.getText());
+        //     errors++;
+        // }
     }
 
     

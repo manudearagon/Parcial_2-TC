@@ -64,4 +64,14 @@ public class CustomVisitor extends compiladoresBaseVisitor<String> {
         }
         return super.visitFor(ctx);
     }
+    
+    @Override
+    public String visitFuncion(compiladoresParser.FuncionContext ctx) {
+        Stack<String> tempStack = new Stack<>();
+        String intermediateCodeFuncion = new Funcion().generateIntermediateCode(ctx,
+        tempStack);
+        System.out.println(intermediateCodeFuncion);
+
+        return super.visitFuncion(ctx);
+    }
 }

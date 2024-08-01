@@ -13,6 +13,12 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface compiladoresVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#tipo}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTipo(compiladoresParser.TipoContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link compiladoresParser#programa}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -31,6 +37,18 @@ public interface compiladoresVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInstruccion(compiladoresParser.InstruccionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#tipos_return}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTipos_return(compiladoresParser.Tipos_returnContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#calculo_return}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCalculo_return(compiladoresParser.Calculo_returnContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link compiladoresParser#return}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -48,12 +66,6 @@ public interface compiladoresVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDeclaracion(compiladoresParser.DeclaracionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link compiladoresParser#tipo}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTipo(compiladoresParser.TipoContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link compiladoresParser#inicializacion_variable}.
 	 * @param ctx the parse tree
@@ -175,12 +187,6 @@ public interface compiladoresVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDeclaracion_funcion(compiladoresParser.Declaracion_funcionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link compiladoresParser#funcion}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFuncion(compiladoresParser.FuncionContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link compiladoresParser#bloque_funcion}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -198,6 +204,12 @@ public interface compiladoresVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTipo_funcion(compiladoresParser.Tipo_funcionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link compiladoresParser#funcion}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncion(compiladoresParser.FuncionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link compiladoresParser#parametros}.
 	 * @param ctx the parse tree

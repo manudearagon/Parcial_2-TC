@@ -10,6 +10,16 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface compiladoresListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link compiladoresParser#tipo}.
+	 * @param ctx the parse tree
+	 */
+	void enterTipo(compiladoresParser.TipoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link compiladoresParser#tipo}.
+	 * @param ctx the parse tree
+	 */
+	void exitTipo(compiladoresParser.TipoContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link compiladoresParser#programa}.
 	 * @param ctx the parse tree
 	 */
@@ -40,6 +50,26 @@ public interface compiladoresListener extends ParseTreeListener {
 	 */
 	void exitInstruccion(compiladoresParser.InstruccionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link compiladoresParser#tipos_return}.
+	 * @param ctx the parse tree
+	 */
+	void enterTipos_return(compiladoresParser.Tipos_returnContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link compiladoresParser#tipos_return}.
+	 * @param ctx the parse tree
+	 */
+	void exitTipos_return(compiladoresParser.Tipos_returnContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link compiladoresParser#calculo_return}.
+	 * @param ctx the parse tree
+	 */
+	void enterCalculo_return(compiladoresParser.Calculo_returnContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link compiladoresParser#calculo_return}.
+	 * @param ctx the parse tree
+	 */
+	void exitCalculo_return(compiladoresParser.Calculo_returnContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link compiladoresParser#return}.
 	 * @param ctx the parse tree
 	 */
@@ -69,16 +99,6 @@ public interface compiladoresListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDeclaracion(compiladoresParser.DeclaracionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link compiladoresParser#tipo}.
-	 * @param ctx the parse tree
-	 */
-	void enterTipo(compiladoresParser.TipoContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link compiladoresParser#tipo}.
-	 * @param ctx the parse tree
-	 */
-	void exitTipo(compiladoresParser.TipoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link compiladoresParser#inicializacion_variable}.
 	 * @param ctx the parse tree
@@ -280,16 +300,6 @@ public interface compiladoresListener extends ParseTreeListener {
 	 */
 	void exitDeclaracion_funcion(compiladoresParser.Declaracion_funcionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link compiladoresParser#funcion}.
-	 * @param ctx the parse tree
-	 */
-	void enterFuncion(compiladoresParser.FuncionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link compiladoresParser#funcion}.
-	 * @param ctx the parse tree
-	 */
-	void exitFuncion(compiladoresParser.FuncionContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link compiladoresParser#bloque_funcion}.
 	 * @param ctx the parse tree
 	 */
@@ -319,6 +329,16 @@ public interface compiladoresListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTipo_funcion(compiladoresParser.Tipo_funcionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link compiladoresParser#funcion}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncion(compiladoresParser.FuncionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link compiladoresParser#funcion}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncion(compiladoresParser.FuncionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link compiladoresParser#parametros}.
 	 * @param ctx the parse tree

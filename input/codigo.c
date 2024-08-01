@@ -1,10 +1,6 @@
-int x = 0;
-int y = 0;
-if (x > 0)
+void funcion(int a, int b, int c)
 {
-    y = -1 * x;
-}
-else
-{
-    y = x;
+    int x = a + b + c;
+    int y = a + b + c;
+    return y + x;
 }

@@ -27,7 +27,7 @@ public class While {
          // Agregar lineas de codigo que se encuentran en el bloque if
          String[] instrucciones = ctx.bloque().instrucciones().getText().split(";");
          for (String instruccion : instrucciones) {
-             code.append("\t").append(instruccion).append(";").append("\n");
+             code.append("\t").append(instruccion).append("\n");
          }
 
         // Añadir instrucción de salto incondicional al inicio del bucle

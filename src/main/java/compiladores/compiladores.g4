@@ -52,6 +52,7 @@ DT: 'int' | 'double';
 TIPOSFUNCION: DT | 'void' | 'char' | 'string' | 'bool';
 OPERADOR: MAS | MENOS | MULTIPLICACION | DIVISION | MODULO;
 LOGICO: AND | OR | NOT;
+tipo: DT;
 
 NUMERO: '-'? DIGITO+;
 ID: (LETRA | '_') (LETRA | DIGITO | '_')*;
@@ -75,7 +76,17 @@ instruccion:
 	| escribir_consola
 	| return;
 
-return: RETURN factores_funcion PYC | RETURN PYC;
+tipos_return:
+	NUMERO calculo_return
+	| ID calculo_return
+	| PA expresion PC calculo_return
+	|;
+
+calculo_return:
+	OPERADOR tipos_return
+	|;
+
+return: RETURN tipos_return PYC;
 
 operacion:
 	NUMERO OPERADOR NUMERO PYC
@@ -84,10 +95,10 @@ operacion:
 	| NUMERO OPERADOR ID PYC
 	| ID cambio_variable PYC;
 
+
 declaracion:
 	tipo ID IGUAL inicializacion_variable lista_identificadores PYC;
 
-tipo: DT;
 
 inicializacion_variable:
 	NUMERO
@@ -152,13 +163,13 @@ cambio_variable: ID exp;
 
 declaracion_funcion: tipo_funcion ID PA parametros PC bloque;
 
-funcion: tipo_funcion ID PA parametros PC bloque_funcion;
-
 bloque_funcion: LA instrucciones return LC;
 
 llamada_funcion: ID PA lista_parametros PC PYC;
 
 tipo_funcion: TIPOSFUNCION;
+
+funcion: tipo_funcion ID PA parametros PC bloque_funcion;
 
 parametros: tipo ID lista_parametros |;
 
