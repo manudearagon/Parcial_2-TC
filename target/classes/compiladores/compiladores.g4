@@ -124,9 +124,9 @@ factor: ID | NUMERO | PA expresion PC;
 
 bloque: LA instrucciones LC;
 
-if: IF condicion bloque else;
+if: IF condicion instruccion else;
 
-else: ELSE bloque | ELSE IF condicion bloque |;
+else: ELSE instruccion |;
 
 while: WHILE condicion bloque;
 

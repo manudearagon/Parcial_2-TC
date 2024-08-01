@@ -274,17 +274,17 @@ public class CustomListener extends compiladoresBaseListener {
             System.out.println("Error sintactico: Falta parentesis de cierre en la condicion: " + ctx.getText());
             errors++;
         }
-        if (ctx.bloque() != null) {
-            var bloque = ctx.getChild(2);
-            if(bloque.getChild(0).getText().equals("{") == false) {
-                System.out.println("Error sintactico: Falta llave de apertura en el bloque: " + bloque.getText());
-                errors++;
-            }
-            if(bloque.getChild(bloque.getChildCount() - 1).getText().equals("}") == false) {
-                System.out.println("Error sintactico: Falta llave de cierre en el bloque: " + bloque.getText());
-                errors++;
-            }
-        }
+        // if (ctx.instruccion().bloque() != null) {
+        //     var bloque = ctx.getChild(2);
+        //     if(bloque.getChild(0).getText().equals("{") == false) {
+        //         System.out.println("Error sintactico: Falta llave de apertura en el bloque: " + bloque.getText());
+        //         errors++;
+        //     }
+        //     if(bloque.getChild(bloque.getChildCount() - 1).getText().equals("}") == false) {
+        //         System.out.println("Error sintactico: Falta llave de cierre en el bloque: " + bloque.getText());
+        //         errors++;
+        //     }
+        // }
     }
 
     @Override

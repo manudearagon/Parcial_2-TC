@@ -19,9 +19,13 @@ public class If {
         code.append("if ").append(tempStack.pop()).append(" njmp ").append(labelElse).append("\n");
 
         // Agregar lineas de codigo que se encuentran en el bloque if
-        String[] instrucciones = ctx.bloque().instrucciones().getText().split(";");
+        String[] instrucciones = new String[0];
+        if (ctx.instruccion().bloque() != null && ctx.instruccion().bloque().getClass() == compiladoresParser.BloqueContext.class){ 
+         instrucciones = ctx.instruccion().bloque().instrucciones().getText().split(";");
         for (String instruccion : instrucciones) {
-            code.append("\t").append(instruccion).append(";").append("\n");
+            code.append("\t").append(instruccion).append("\n");
+        }}else if(ctx.instruccion() != null){
+            code.append("\t").append(ctx.instruccion().getText()).append("\n");
         }
 
         // Saltar al final después de ejecutar el bloque if
@@ -29,12 +33,15 @@ public class If {
 
         // Etiqueta else
         code.append("label ").append(labelElse).append("\n");
+
         // Agregar lineas de codigo que se encuentran en el bloque else
-        if (ctx.else_().bloque() != null) {
-            instrucciones = ctx.else_().bloque().instrucciones().getText().split(";");
+        if (ctx.else_().instruccion() != null && ctx.else_().instruccion().bloque().getClass() == compiladoresParser.BloqueContext.class) {
+            instrucciones = ctx.else_().instruccion().bloque().instrucciones().getText().split(";");
             for (String instruccion : instrucciones) {
-                code.append("\t").append(instruccion).append(";").append("\n");
+                code.append("\t").append(instruccion).append("\n");
             }
+        }else if(ctx.else_().instruccion() != null){
+            code.append("\t").append(ctx.else_().instruccion().getText()).append("\n");
         }
         // Etiqueta de fin
         code.append("label ").append(labelEnd).append("\n");
