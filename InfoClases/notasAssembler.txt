@@ -20,6 +20,9 @@ Requiere:
 
 --- Asignacion - Funciona bien
 a = b * c - d * e;
+---
+int a = 0, b = 1, c = 2, d = 3, e = 4;
+a = b * c - d * e + 2;
 
 t0 = b * c
 t1 = d * e
@@ -35,10 +38,16 @@ a = t2
 
 --- If Statement - 
 
+int x = 0;
+int y = 0;
 if (x > 0)
+{
     y = -1 * x
+}
 else
+{
     y = x
+}
 
 t0 = x > 0
 if t0 njmp l0

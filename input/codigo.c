@@ -1,6 +1,2 @@
-void funcion(int a, int b, int c)
-{
-    int x = a + b + c;
-    int y = a + b + c;
-    return y + x;
-}
+int a = 0, b = 1, c = 2, d = 3, e = 4;
+a = b * c - d * e + 2;
